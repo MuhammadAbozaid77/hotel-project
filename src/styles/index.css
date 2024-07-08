@@ -2,4 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/* #df1133 */
+/* #fc374f   -----    Light Red  */
+/* #ec2a42   -----    Medium Red  */
+/* #c51026   -----    Dark Red  */
+/* #a31123   -----    Very Dark Red  */
+
+.navLinks .active {
+  background-color: #ec2a42;
+  transition: background-color 0.2s;
+  color: white;
+}
+
+.navLinks a {
+  display: flex;
+  padding: 10px 20px;
+  justify-content: start;
+  align-items: center;
+}
