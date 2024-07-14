@@ -9,7 +9,7 @@ export default function Cabins() {
       <div className="flex justify-between items-center mb-[20px] bg-white py-[20px] px-5">
         <h1 className="font-semibold text-[20px]"> Cabins </h1>
         <span
-          className=" p-2 rounded-md shadow bg-emerald-500 text-white font-semibold"
+          className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
           onClick={() => setShowAddModal(true)}
         >
           Add New Cabin
@@ -17,7 +17,9 @@ export default function Cabins() {
       </div>
       <CabinTable />
 
-      {showAddModal && <CreateCabinModal />}
+      {showAddModal && (
+        <CreateCabinModal onClose={() => setShowAddModal(false)} />
+      )}
     </>
   );
 }
