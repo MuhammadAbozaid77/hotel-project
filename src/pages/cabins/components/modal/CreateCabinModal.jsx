@@ -1,14 +1,37 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
+import { createCabin } from "../../../../data/apiCabins";
+import toast from "react-hot-toast";
+
 export default function CreateCabinModal({ onClose }) {
+  const { register, handleSubmit, reset, getValues } = useForm();
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading: isCreating } = useMutation({
+    mutationFn: createCabin,
+    onSuccess: () => {
+      toast.success("New Cabin Created Successfuly");
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+      onClose();
+      reset();
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
+  const onSubmit = (data) => {
+    mutate(data);
+  };
+  const onError = (errors) => {
+    console.log(errors);
+  };
+
   const handleModalContentClick = (e) => {
     e.stopPropagation();
   };
 
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (e) => {
-    console.log(e);
-  };
   return (
     <>
       <div
@@ -16,7 +39,7 @@ export default function CreateCabinModal({ onClose }) {
         onClick={() => onClose()}
       >
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit, onError)}
           className="border w-[400px] p-5  bg-white rounded-lg shadow dark:bg-gray-700"
           onClick={handleModalContentClick}
         >
@@ -40,13 +63,12 @@ export default function CreateCabinModal({ onClose }) {
               Cabin Name
             </label>
             <input
-              {...register("name")}
+              {...register("name", {
+                required: "This Field Is Required",
+              })}
               type="text"
-              // name="cabinName"
               id="cabinName"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="name"
-              required
             />
           </div>
 
@@ -58,13 +80,20 @@ export default function CreateCabinModal({ onClose }) {
               Max Capacity
             </label>
             <input
-              {...register("maxCapacity")}
+              {...register("maxCapacity", {
+                required: "This Field Is Required",
+                min: {
+                  value: 1,
+                  message: "Value Should Be At Least 1",
+                },
+                // max: {
+                //   value: 2,
+                //   message: "Value Should Be At Least 2",
+                // },
+              })}
               type="number"
-              // name="maxCapacity"
               id="maxCapacity"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="name"
-              required
             />
           </div>
 
@@ -76,13 +105,16 @@ export default function CreateCabinModal({ onClose }) {
               Regular Price
             </label>
             <input
-              {...register("regularPrice")}
+              {...register("regularPrice", {
+                required: "This Field Is Required",
+                min: {
+                  value: 1,
+                  message: "Value Should Be At Least 1",
+                },
+              })}
               type="number"
-              // name="regularPrice"
               id="regularPrice"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="name"
-              required
             />
           </div>
 
@@ -94,14 +126,20 @@ export default function CreateCabinModal({ onClose }) {
               Discount
             </label>
             <input
-              {...register("discount")}
+              {...register("discount", {
+                required: "This Field Is Required",
+                min: {
+                  value: 1,
+                  message: "Value Should Be At Least 1",
+                },
+                validate: (value) =>
+                  value <= getValues().regularPrice ||
+                  "Discount Must Be Less Than regular Price",
+              })}
               defaultValue={0}
               type="number"
-              // name="discount"
               id="discount"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="name"
-              required
             />
           </div>
 
@@ -139,11 +177,12 @@ export default function CreateCabinModal({ onClose }) {
 
           <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
             <button
+              disabled={isCreating}
               data-modal-hide="default-modal"
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Submit
+              Add Cabin
             </button>
             <button
               data-modal-hide="default-modal"

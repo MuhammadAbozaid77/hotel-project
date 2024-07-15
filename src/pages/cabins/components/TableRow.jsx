@@ -4,6 +4,7 @@ import { deleteCabins } from "../../../data/apiCabins";
 import SpinnerLoading from "../../../components/ui/SpinnerLoading";
 import NoDataToDisplay from "../../../components/ui/NoDataToDisplay";
 import toast from "react-hot-toast";
+import { FaTrashAlt } from "react-icons/fa";
 
 export default function TableRow({ item }) {
   const queryClient = useQueryClient();
@@ -60,9 +61,9 @@ export default function TableRow({ item }) {
         <button
           onClick={() => mutate(item?.id)}
           // disabled={isDeleting}
-          className="shadow w-[100px] py-2 rounded-md bg-red-500 hover:bg-red-600 duration-150 text-white font-semibold"
+          className="shadow w-auto  p-2 rounded-md bg-red-500 hover:bg-red-600 duration-150 text-white font-semibold"
         >
-          Delete
+          <FaTrashAlt size={15} />
         </button>
       </td>
     </tr>

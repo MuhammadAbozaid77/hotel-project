@@ -9,7 +9,7 @@ export default function AppLayout() {
         <Sidebar />
         <div className="col-span-5 overflow-auto">
           <Header />
-          <main className="bg-stone-100 min-h-[100vh] p-5 my-0 mx-auto">
+          <main className="bg-stone-100 min-h-[100vh] my-0 mx-auto">
             <Outlet />
           </main>
         </div>
