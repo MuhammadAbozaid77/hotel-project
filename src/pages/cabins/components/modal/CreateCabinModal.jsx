@@ -5,7 +5,8 @@ import { createCabin } from "../../../../data/apiCabins";
 import toast from "react-hot-toast";
 
 export default function CreateCabinModal({ onClose }) {
-  const { register, handleSubmit, reset, getValues } = useForm();
+  const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const { errors } = formState;
   const queryClient = useQueryClient();
 
   const { mutate, isLoading: isCreating } = useMutation({
@@ -22,7 +23,8 @@ export default function CreateCabinModal({ onClose }) {
   });
 
   const onSubmit = (data) => {
-    mutate(data);
+    // mutate(data);
+    console.log(data);
   };
   const onError = (errors) => {
     console.log(errors);
@@ -35,7 +37,7 @@ export default function CreateCabinModal({ onClose }) {
   return (
     <>
       <div
-        className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-700/70 flex justify-center items-center"
+        className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-700/90 flex justify-center items-center"
         onClick={() => onClose()}
       >
         <form
@@ -70,6 +72,9 @@ export default function CreateCabinModal({ onClose }) {
               id="cabinName"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
+            <span className="text-red-600 text-[14px]">
+              {errors?.name?.message}
+            </span>
           </div>
 
           <div className="w-[100%] mb-3">
@@ -86,15 +91,14 @@ export default function CreateCabinModal({ onClose }) {
                   value: 1,
                   message: "Value Should Be At Least 1",
                 },
-                // max: {
-                //   value: 2,
-                //   message: "Value Should Be At Least 2",
-                // },
               })}
               type="number"
               id="maxCapacity"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
+            <span className="text-red-600 text-[14px]">
+              {errors?.maxCapacity?.message}
+            </span>
           </div>
 
           <div className="w-[100%] mb-3">
@@ -116,36 +120,46 @@ export default function CreateCabinModal({ onClose }) {
               id="regularPrice"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
+            <span className="text-red-600 text-[14px]">
+              {errors?.regularPrice?.message}
+            </span>
           </div>
 
           <div className="w-[100%] mb-3">
             <label
-              htmlFor="regularPrice"
+              htmlFor="discount"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Discount
             </label>
             <input
+              type="number"
+              id="discount"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              defaultValue={0} // Assuming a default value for discount
               {...register("discount", {
                 required: "This Field Is Required",
                 min: {
                   value: 1,
                   message: "Value Should Be At Least 1",
                 },
-                validate: (value) =>
-                  value <= getValues().regularPrice ||
-                  "Discount Must Be Less Than regular Price",
+                validate: (value) => {
+                  const regularPrice = getValues("regularPrice");
+                  return (
+                    value <= Number(regularPrice) ||
+                    "Discount Must Be Less Than Regular Price"
+                  );
+                },
               })}
-              defaultValue={0}
-              type="number"
-              id="discount"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
+            <span className="text-red-600 text-[14px]">
+              {errors?.discount?.message}
+            </span>
           </div>
 
           <div className="w-[100%] mb-3">
             <label
-              htmlFor="regularPrice"
+              htmlFor="descripition"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Descripition or Website
@@ -154,7 +168,7 @@ export default function CreateCabinModal({ onClose }) {
               {...register("descripition")}
               defaultValue={""}
               name=""
-              id=""
+              id="descripition"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             ></textarea>
           </div>
