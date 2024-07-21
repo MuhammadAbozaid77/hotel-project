@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
-import { createCabin } from "../../../../data/apiCabins";
+import { updateCabin } from "../../../../data/apiCabins";
 import toast from "react-hot-toast";
 import FormInput from "../../../../components/ui/inputs/FormInput";
 
-export default function CreateCabinModal({ onClose }) {
+export default function EditCabinModal({ onClose }) {
   const {
     register,
     handleSubmit,
@@ -15,21 +15,22 @@ export default function CreateCabinModal({ onClose }) {
   } = useForm();
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading: isCreating } = useMutation({
-    mutationFn: createCabin,
-    onSuccess: () => {
-      toast.success("New Cabin Created Successfuly");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      onClose();
-      reset();
-    },
-    onError: (err) => toast.error(err?.message),
-  });
-
+  //   const { mutate, isLoading: isCreating } = useMutation({
+  //     mutationFn: updateCabin,
+  //     onSuccess: () => {
+  //       toast.success("New Cabin Created Successfuly");
+  //       queryClient.invalidateQueries({
+  //         queryKey: ["cabins"],
+  //       });
+  //       onClose();
+  //       reset();
+  //     },
+  //     onError: (err) => toast.error(err?.message),
+  //   });
+  const xxx = useMutation();
+  console.log(xxx);
   const onSubmit = (data) => {
-    mutate({ ...data, image: data?.image[0]?.name });
+    // mutate({ ...data, image: data?.image[0]?.name });
   };
   const onError = (errors) => {
     console.log(errors);
@@ -50,7 +51,7 @@ export default function CreateCabinModal({ onClose }) {
         >
           <div className="flex items-center justify-between px-2 py-5 border-b rounded-t dark:border-gray-600 mb-5">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Add New Cabin
+              Edit Cabin
             </h3>
             <div
               onClick={() => onClose()}
@@ -67,7 +68,7 @@ export default function CreateCabinModal({ onClose }) {
               })}
               type="text"
               id="cabinName"
-              disabled={isCreating}
+              //   disabled={isCreating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>
@@ -86,7 +87,7 @@ export default function CreateCabinModal({ onClose }) {
               })}
               type="number"
               id="maxCapacity"
-              disabled={isCreating}
+              //   disabled={isCreating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>
@@ -105,7 +106,7 @@ export default function CreateCabinModal({ onClose }) {
               })}
               type="number"
               id="regularPrice"
-              disabled={isCreating}
+              //   disabled={isCreating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>
@@ -126,7 +127,7 @@ export default function CreateCabinModal({ onClose }) {
                   );
                 },
               })}
-              disabled={isCreating}
+              //   disabled={isCreating}
               type="number"
               id="discount"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -142,7 +143,7 @@ export default function CreateCabinModal({ onClose }) {
               // defaultValue={""}
               name=""
               id="descripition"
-              disabled={isCreating}
+              //   disabled={isCreating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             ></textarea>
           </FormInput>
@@ -153,19 +154,19 @@ export default function CreateCabinModal({ onClose }) {
               type="file"
               accept="image/*"
               id="image"
-              disabled={isCreating}
+              //   disabled={isCreating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>
 
           <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
             <button
-              disabled={isCreating}
+              //   disabled={isCreating}
               data-modal-hide="default-modal"
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Add Cabin
+              Update
             </button>
             <button
               data-modal-hide="default-modal"
