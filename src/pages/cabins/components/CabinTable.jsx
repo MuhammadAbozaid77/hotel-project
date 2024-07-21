@@ -3,6 +3,8 @@ import { getCabins } from "../../../data/apiCabins";
 import SpinnerLoading from "../../../components/ui/SpinnerLoading";
 import TableRow from "./TableRow";
 import ErrorMessage from "../../../components/ui/ErrorMessage";
+import { useEffect } from "react";
+import NoDataToDisplay from "../../../components/ui/NoDataToDisplay";
 
 export default function CabinTable() {
   const {
@@ -23,6 +25,10 @@ export default function CabinTable() {
         <ErrorMessage ErrorMessage={error?.message} />
       </>
     );
+  }
+
+  if (cabins?.length === 0) {
+    return <NoDataToDisplay />;
   }
   return (
     <>
