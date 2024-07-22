@@ -4,36 +4,45 @@ import { IoMdClose } from "react-icons/io";
 import { updateCabin } from "../../../../data/apiCabins";
 import toast from "react-hot-toast";
 import FormInput from "../../../../components/ui/inputs/FormInput";
+import { useState } from "react";
 
-export default function EditCabinModal({ onClose }) {
+export default function EditCabinModal({ onClose, item }) {
   const {
     register,
     handleSubmit,
     reset,
     getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { ...item } });
   const queryClient = useQueryClient();
 
-  //   const { mutate, isLoading: isCreating } = useMutation({
-  //     mutationFn: updateCabin,
-  //     onSuccess: () => {
-  //       toast.success("New Cabin Created Successfuly");
-  //       queryClient.invalidateQueries({
-  //         queryKey: ["cabins"],
-  //       });
-  //       onClose();
-  //       reset();
-  //     },
-  //     onError: (err) => toast.error(err?.message),
-  //   });
-  const xxx = useMutation();
-  console.log(xxx);
+  const { mutate: mutateEditing, isLoading: isEditing } = useMutation({
+    mutationFn: updateCabin,
+    onSuccess: () => {
+      toast.success("Cabin Updated Successfuly");
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+      onClose();
+      reset();
+    },
+    onError: (err) => toast.error(err?.message),
+  });
+
+  const [descripitionText, setDescripitionText] = useState(item?.descripition);
+
   const onSubmit = (data) => {
-    // mutate({ ...data, image: data?.image[0]?.name });
+    mutateEditing({
+      UpdatedCabinObject: {
+        ...data,
+        image: data?.image[0]?.name || data?.image,
+        descripition: descripitionText,
+      },
+      id: item?.id,
+    });
   };
   const onError = (errors) => {
-    console.log(errors);
+    // console.log(errors);
   };
 
   return (
@@ -68,6 +77,7 @@ export default function EditCabinModal({ onClose }) {
               })}
               type="text"
               id="cabinName"
+              // defaultValue={item?.name}
               //   disabled={isCreating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -87,6 +97,7 @@ export default function EditCabinModal({ onClose }) {
               })}
               type="number"
               id="maxCapacity"
+              // defaultValue={item?.maxCapacity}
               //   disabled={isCreating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -106,6 +117,7 @@ export default function EditCabinModal({ onClose }) {
               })}
               type="number"
               id="regularPrice"
+              // defaultValue={item?.regularPrice}
               //   disabled={isCreating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
@@ -128,6 +140,7 @@ export default function EditCabinModal({ onClose }) {
                 },
               })}
               //   disabled={isCreating}
+              // defaultValue={item?.discount}
               type="number"
               id="discount"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -140,9 +153,10 @@ export default function EditCabinModal({ onClose }) {
           >
             <textarea
               {...register("descripition")}
-              // defaultValue={""}
               name=""
               id="descripition"
+              // defaultValue={descripitionText}
+              onChange={(e) => setDescripitionText(e.target.value)}
               //   disabled={isCreating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             ></textarea>
@@ -151,10 +165,10 @@ export default function EditCabinModal({ onClose }) {
           <FormInput label={"Cabin Photo"} error={errors?.image?.message}>
             <input
               {...register("image")}
-              type="file"
-              accept="image/*"
+              // type="file"
               id="image"
               //   disabled={isCreating}
+              // defaultValue={item?.image}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>

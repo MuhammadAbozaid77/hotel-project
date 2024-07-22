@@ -7,9 +7,11 @@ import toast from "react-hot-toast";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
 import { useState } from "react";
 import EditCabinModal from "./modal/EditCabinModal";
+// import DeleteCabinModal from "./modal/DeleteCabinModal";
 
 export default function TableRow({ item }) {
   const [showEditModal, setShowEditModal] = useState(null);
+  // const [showDeleteModal, setShowDeleteModal] = useState(null);
 
   const queryClient = useQueryClient();
 
@@ -27,6 +29,7 @@ export default function TableRow({ item }) {
     },
     onError: (err) => toast.error(err.message),
   });
+
   if (isDeleting)
     return (
       <tr>
@@ -83,8 +86,15 @@ export default function TableRow({ item }) {
       </tr>
 
       {showEditModal && (
-        <EditCabinModal onClose={() => setShowEditModal(false)} />
+        <EditCabinModal
+          onClose={() => setShowEditModal(false)}
+          item={item}
+        />
       )}
+
+      {/* {showDeleteModal && (
+        <DeleteCabinModal onClose={() => setShowEditModal(false)} />
+      )} */}
     </>
   );
 }

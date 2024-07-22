@@ -4,6 +4,8 @@ import { IoMdClose } from "react-icons/io";
 import { createCabin } from "../../../../data/apiCabins";
 import toast from "react-hot-toast";
 import FormInput from "../../../../components/ui/inputs/FormInput";
+import { getTimeAndDate } from "../../../../data/utilities";
+import { useState } from "react";
 
 export default function CreateCabinModal({ onClose }) {
   const {
@@ -28,9 +30,14 @@ export default function CreateCabinModal({ onClose }) {
     onError: (err) => toast.error(err?.message),
   });
 
+  const [descripitionText, setDescripitionText] = useState("");
   const onSubmit = (data) => {
-    // console.log({ ...data, image: data?.image[0]?.name });
-    mutate({ ...data, image: data?.image[0]?.name });
+    mutate({
+      ...data,
+      image: data?.image[0]?.name,
+      CreateDate: getTimeAndDate(),
+      descripition: descripitionText,
+    });
   };
   const onError = (errors) => {
     // console.log(errors);
@@ -140,7 +147,7 @@ export default function CreateCabinModal({ onClose }) {
           >
             <textarea
               {...register("descripition")}
-              // defaultValue={""}
+              onChange={(e) => setDescripitionText(e.target.value)}
               name=""
               id="descripition"
               disabled={isCreating}
