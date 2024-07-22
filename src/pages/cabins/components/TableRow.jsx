@@ -7,45 +7,46 @@ import toast from "react-hot-toast";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
 import { useState } from "react";
 import EditCabinModal from "./modal/EditCabinModal";
+import DeleteCabinModal from "./modal/DeleteCabinModal";
 // import DeleteCabinModal from "./modal/DeleteCabinModal";
 
 export default function TableRow({ item }) {
   const [showEditModal, setShowEditModal] = useState(null);
-  // const [showDeleteModal, setShowDeleteModal] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(null);
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const {
-    mutate,
-    isLoading: isDeleting,
-    data,
-  } = useMutation({
-    mutationFn: deleteCabins,
-    onSuccess: () => {
-      toast.success("Cabin Deleted Successfuly");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  // const {
+  //   mutate,
+  //   isLoading: isDeleting,
+  //   data,
+  // } = useMutation({
+  //   mutationFn: deleteCabins,
+  //   onSuccess: () => {
+  //     toast.success("Cabin Deleted Successfuly");
+  //     queryClient.invalidateQueries({
+  //       queryKey: ["cabins"],
+  //     });
+  //   },
+  //   onError: (err) => toast.error(err.message),
+  // });
 
-  if (isDeleting)
-    return (
-      <tr>
-        <td colSpan="6">
-          <SpinnerLoading />;
-        </td>
-      </tr>
-    );
-  if (data?.length === 0)
-    return (
-      <tr>
-        <td colSpan="6">
-          <NoDataToDisplay />;
-        </td>
-      </tr>
-    );
+  // if (isDeleting)
+  //   return (
+  //     <tr>
+  //       <td colSpan="6">
+  //         <SpinnerLoading />;
+  //       </td>
+  //     </tr>
+  //   );
+  // if (data?.length === 0)
+  //   return (
+  //     <tr>
+  //       <td colSpan="6">
+  //         <NoDataToDisplay />;
+  //       </td>
+  //     </tr>
+  //   );
 
   return (
     <>
@@ -77,7 +78,7 @@ export default function TableRow({ item }) {
         </td>
         <td className="text-center  border-gray-200 px-6 py-4">
           <button
-            onClick={() => mutate(item?.id)}
+            onClick={() => setShowDeleteModal(item?.id)}
             className="shadow w-auto  p-2 rounded-md bg-red-500 hover:bg-red-600 duration-150 text-white font-semibold"
           >
             <FaTrashAlt size={15} />
@@ -86,15 +87,15 @@ export default function TableRow({ item }) {
       </tr>
 
       {showEditModal && (
-        <EditCabinModal
-          onClose={() => setShowEditModal(false)}
-          item={item}
-        />
+        <EditCabinModal onClose={() => setShowEditModal(false)} item={item} />
       )}
 
-      {/* {showDeleteModal && (
-        <DeleteCabinModal onClose={() => setShowEditModal(false)} />
-      )} */}
+      {showDeleteModal && (
+        <DeleteCabinModal
+          onClose={() => setShowDeleteModal(false)}
+          id={showDeleteModal}
+        />
+      )}
     </>
   );
 }
