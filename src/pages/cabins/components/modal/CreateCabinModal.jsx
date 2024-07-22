@@ -29,10 +29,11 @@ export default function CreateCabinModal({ onClose }) {
   });
 
   const onSubmit = (data) => {
+    // console.log({ ...data, image: data?.image[0]?.name });
     mutate({ ...data, image: data?.image[0]?.name });
   };
   const onError = (errors) => {
-    console.log(errors);
+    // console.log(errors);
   };
 
   return (
