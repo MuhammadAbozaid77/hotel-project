@@ -1,4 +1,4 @@
-import useDeleteCabin from "../../../../hooks/useDeleteCabin";
+import useDeleteCabin from "../../../../hooks/cabins/useDeleteCabin";
 export default function DeleteCabinModal({ onClose, id }) {
   const { isDeleting, mutateDeleteCabin } = useDeleteCabin();
 
