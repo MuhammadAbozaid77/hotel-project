@@ -1,12 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
-import { createCabin } from "../../../../data/apiCabins";
-import toast from "react-hot-toast";
 import FormInput from "../../../../components/ui/inputs/FormInput";
 import { getTimeAndDate } from "../../../../data/utilities";
 import { useState } from "react";
 import useCreateCabin from "../../../../hooks/cabins/useCreateCabin";
+import { v4 } from "uuid";
 
 export default function CreateCabinModal({ onClose }) {
   const {
@@ -23,12 +21,15 @@ export default function CreateCabinModal({ onClose }) {
   const onSubmit = (data) => {
     mutateCreatingCabin({
       ...data,
-      image: data?.image[0]?.name,
+      imageId: `${data?.name + v4()}`,
       CreateDate: getTimeAndDate(),
       descripition: descripitionText,
     });
-    onClose();
-    reset();
+
+    // then((_) => {
+    //   onClose();
+    //   reset();
+    // });
   };
   const onError = (errors) => {
     // console.log(errors);

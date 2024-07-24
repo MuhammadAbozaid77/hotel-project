@@ -4,6 +4,23 @@ import BookingsTable from "./components/BookingsTable";
 
 export default function Bookings() {
   const [showAddModal, setShowAddModal] = useState(false);
+
+  const data1 = [
+    { id: 1, path: "fdjfhhjjgfbgfgvfbdjf" },
+    { id: 2, path: "fdjfhhjjglkljldfbgfgvfbdjf" },
+    { id: 3, path: "ghdfgkjhhf" },
+  ];
+  const data2 = ["ghdfgkjhhf", "fdjfhhjjgfbgfgvfbdjf", "fdffdf"];
+
+  const sss = data1.map((el) => {
+    const ccc = data2.filter((ell) => {
+      return el.path.toLocaleLowerCase().includes(ell.toLocaleLowerCase());
+    });
+    return { ...el, imagepath: ccc[0] || null };
+  });
+
+  
+  console.log(sss);
   return (
     <>
       <div className="flex justify-between items-center bg-white py-[20px] px-5 shadow border-t-[5px] border-gray-500">

@@ -5,6 +5,7 @@ import { updateCabin } from "../../../../data/apiCabins";
 import toast from "react-hot-toast";
 import FormInput from "../../../../components/ui/inputs/FormInput";
 import { useState } from "react";
+import useUpdateCabin from "../../../../hooks/cabins/useUpdateCabin";
 
 export default function EditCabinModal({ onClose, item }) {
   const {
@@ -14,23 +15,9 @@ export default function EditCabinModal({ onClose, item }) {
     getValues,
     formState: { errors },
   } = useForm({ defaultValues: { ...item } });
-  const queryClient = useQueryClient();
-
-  const { mutate: mutateEditing, isLoading: isEditing } = useMutation({
-    mutationFn: updateCabin,
-    onSuccess: () => {
-      toast.success("Cabin Updated Successfuly");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      onClose();
-      reset();
-    },
-    onError: (err) => toast.error(err?.message),
-  });
-
   const [descripitionText, setDescripitionText] = useState(item?.descripition);
 
+  const { isEditing, mutateEditing } = useUpdateCabin();
   const onSubmit = (data) => {
     mutateEditing({
       UpdatedCabinObject: {
@@ -40,6 +27,9 @@ export default function EditCabinModal({ onClose, item }) {
       },
       id: item?.id,
     });
+
+    onClose();
+    reset();
   };
   const onError = (errors) => {
     // console.log(errors);
