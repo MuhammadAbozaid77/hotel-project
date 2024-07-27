@@ -3,10 +3,13 @@ import { getSettings } from "../../data/apiSettings";
 
 //
 export default function useGetSettings() {
-  const { mutate: mutateGetSettings, isLoading: isCreating } = useQuery({
+  const {
+    isLoading,
+    error,
+    data: settings,
+  } = useQuery({
+    queryKey: ["settings"],
     queryFn: getSettings,
-    queryKey: "",
   });
-
-  return { isCreating, mutateGetSettings };
+  return { isLoading, settings, error };
 }

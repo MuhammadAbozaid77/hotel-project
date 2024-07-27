@@ -11,7 +11,7 @@ export async function getSettings() {
       ...doc?.data(),
       id: doc?.id,
     }));
-    console.log(filteredData);
+
     return filteredData || [];
   } catch (error) {
     throw new Error("Cant Get Setting Data");
@@ -19,6 +19,6 @@ export async function getSettings() {
 }
 
 //
-export async function updateSettings() {
-  console.log("data");
+export async function updateSettings(newParams) {
+  console.log("newParams", newParams);
 }
