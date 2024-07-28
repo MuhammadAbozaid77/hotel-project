@@ -4,6 +4,7 @@ import SpinnerLoading from "../../../components/ui/SpinnerLoading";
 import TableRow from "./TableRow";
 import ErrorMessage from "../../../components/ui/ErrorMessage";
 import NoDataToDisplay from "../../../components/ui/NoDataToDisplay";
+import { useSearchParams } from "react-router-dom";
 
 export default function CabinTable() {
   const {
@@ -15,6 +16,26 @@ export default function CabinTable() {
     queryFn: getCabins,
   });
 
+  const [searchParams] = useSearchParams();
+  //  ---------------------------------- Filtered --------------------------------
+  const filterValue = searchParams.get("discount") || "all";
+  let filterCabinsData;
+  // Discount Value
+  if (filterValue === "all") filterCabinsData = cabins;
+  if (filterValue === "noDiscount")
+    filterCabinsData = cabins?.filter((el) => el.discount == 1);
+  if (filterValue === "withDiscount")
+    filterCabinsData = cabins?.filter((el) => el.discount > 1);
+  //  ---------------------------------- Sorted By --------------------------------
+  const sortedByValue = searchParams.get("sortedBy") || "";
+  console.log("sortedByValue", sortedByValue);
+  const [field, direction] = sortedByValue.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  let sortedCabinsData = filterCabinsData?.sort(
+    (a, b) => a[field] - b[field] * modifier
+  );
+
+  //  ---------------------------------- Return --------------------------------
   if (isLoading) {
     return <SpinnerLoading />;
   }
@@ -61,7 +82,7 @@ export default function CabinTable() {
             </tr>
           </thead>
           <tbody>
-            {cabins?.map((el, index) => (
+            {filterCabinsData?.map((el, index) => (
               <TableRow item={el} key={index} />
             ))}
           </tbody>

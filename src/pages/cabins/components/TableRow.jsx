@@ -8,22 +8,7 @@ export default function TableRow({ item }) {
   const [showEditModal, setShowEditModal] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(null);
 
-  // if (isDeleting)
-  //   return (
-  //     <tr>
-  //       <td colSpan="6">
-  //         <SpinnerLoading />;
-  //       </td>
-  //     </tr>
-  //   );
-  // if (data?.length === 0)
-  //   return (
-  //     <tr>
-  //       <td colSpan="6">
-  //         <NoDataToDisplay />;
-  //       </td>
-  //     </tr>
-  //   );
+
 
   return (
     <>
