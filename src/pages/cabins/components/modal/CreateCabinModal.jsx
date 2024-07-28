@@ -38,7 +38,7 @@ export default function CreateCabinModal({ onClose }) {
   return (
     <>
       <div
-        className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-700/90 flex justify-center items-center"
+        className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/80 flex justify-center items-center "
         onClick={() => onClose()}
       >
         <form

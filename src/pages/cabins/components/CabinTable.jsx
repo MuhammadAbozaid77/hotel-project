@@ -29,12 +29,14 @@ export default function CabinTable() {
   if (cabins?.length === 0) {
     return <NoDataToDisplay />;
   }
+
+  //
   return (
     <>
       <div className="relative overflow-x-auto rounded-[5px]">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-          <thead className=" text-gray-600 uppercase bg-gray-300">
-            <tr>
+          <thead className=" text-gray-600 uppercase bg-white border-b h-[100px] ">
+            <tr className="">
               <th scope="col" className="px-6 py-3 text-center">
                 img
               </th>
