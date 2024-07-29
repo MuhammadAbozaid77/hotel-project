@@ -8,14 +8,12 @@ export default function TableRow({ item }) {
   const [showEditModal, setShowEditModal] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(null);
 
-
-
   return (
     <>
       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
         <td className="flex justify-center items-center p-2">
           <img
-            src={item?.imagePath}
+            src={item?.image}
             alt=""
             className="h-[80px] w-[80px] rounded border"
           />

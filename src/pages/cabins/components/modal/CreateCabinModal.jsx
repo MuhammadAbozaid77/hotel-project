@@ -21,8 +21,7 @@ export default function CreateCabinModal({ onClose }) {
   const onSubmit = (data) => {
     mutateCreatingCabin({
       ...data,
-      imageId: `${data?.name + v4()}`,
-      CreateDate: getTimeAndDate(),
+      image: data?.image[0],
       descripition: descripitionText,
     });
 

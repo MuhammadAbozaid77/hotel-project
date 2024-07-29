@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
-import { createCabin } from "../../../../data/apiCabins";
 import toast from "react-hot-toast";
 import FormInput from "../../../../components/ui/inputs/FormInput";
 

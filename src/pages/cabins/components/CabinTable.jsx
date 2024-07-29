@@ -1,21 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { getCabins } from "../../../data/apiCabins";
-import SpinnerLoading from "../../../components/ui/SpinnerLoading";
 import TableRow from "./TableRow";
-import ErrorMessage from "../../../components/ui/ErrorMessage";
-import NoDataToDisplay from "../../../components/ui/NoDataToDisplay";
 import { useSearchParams } from "react-router-dom";
 
-export default function CabinTable() {
-  const {
-    isLoading,
-    data: cabins,
-    error,
-  } = useQuery({
-    queryKey: ["cabins"],
-    queryFn: getCabins,
-  });
-
+export default function CabinTable({ cabins }) {
+  console.log(cabins);
   const [searchParams] = useSearchParams();
   //  ---------------------------------- Filtered --------------------------------
   const filterValue = searchParams.get("discount") || "all";
@@ -28,28 +15,12 @@ export default function CabinTable() {
     filterCabinsData = cabins?.filter((el) => el.discount > 1);
   //  ---------------------------------- Sorted By --------------------------------
   const sortedByValue = searchParams.get("sortedBy") || "";
-  console.log("sortedByValue", sortedByValue);
+  // console.log("sortedByValue", sortedByValue);
   const [field, direction] = sortedByValue.split("-");
   const modifier = direction === "asc" ? 1 : -1;
   let sortedCabinsData = filterCabinsData?.sort(
     (a, b) => a[field] - b[field] * modifier
   );
-
-  //  ---------------------------------- Return --------------------------------
-  if (isLoading) {
-    return <SpinnerLoading />;
-  }
-  if (error) {
-    return (
-      <>
-        <ErrorMessage ErrorMessage={error?.message} />
-      </>
-    );
-  }
-
-  if (cabins?.length === 0) {
-    return <NoDataToDisplay />;
-  }
 
   //
   return (

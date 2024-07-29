@@ -4,9 +4,31 @@ import CreateCabinModal from "./components/modal/CreateCabinModal";
 import CabinsFilter from "./components/modal/CabinsFilter";
 import { FaArrowDownZA } from "react-icons/fa6";
 import SortByCabins from "./components/modal/SortByCabins";
+import useGetCabins from "../../hooks/cabins/useGetCabins";
+import SpinnerLoading from "../../components/ui/SpinnerLoading";
+import ErrorMessage from "../../components/ui/ErrorMessage";
+import NoDataToDisplay from "../../components/ui/NoDataToDisplay";
 
 export default function Cabins() {
   const [showAddModal, setShowAddModal] = useState(false);
+
+  const { isLoading, cabins, error } = useGetCabins();
+  // console.log(cabins);
+  //  ---------------------------------- Return --------------------------------
+  if (isLoading) {
+    return <SpinnerLoading />;
+  }
+  if (error) {
+    return (
+      <>
+        <ErrorMessage ErrorMessage={error?.message} />
+      </>
+    );
+  }
+
+  if (cabins?.length === 0) {
+    return <NoDataToDisplay />;
+  }
 
   return (
     <>
@@ -30,7 +52,7 @@ export default function Cabins() {
         </div>
       </div>
       <div className="p-5">
-        <CabinTable />
+        <CabinTable cabins={cabins} />
       </div>
 
       {showAddModal && (
