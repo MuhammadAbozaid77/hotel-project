@@ -5,7 +5,6 @@ import { useState } from "react";
 import useUpdateCabin from "../../../../hooks/cabins/useUpdateCabin";
 
 export default function EditCabinModal({ onClose, item }) {
-  console.log(item);
   const {
     register,
     handleSubmit,
@@ -17,10 +16,8 @@ export default function EditCabinModal({ onClose, item }) {
 
   const { isEditing, mutateEditing } = useUpdateCabin();
   const onSubmit = (data) => {
-    console.log(data);
     mutateEditing({
       editedCabin: {
-        // ...data,
         descripition: descripitionText || item?.descripition,
         created_at: data?.created_at || item?.created_at,
         discount: data?.discount || item?.discount,
@@ -28,9 +25,9 @@ export default function EditCabinModal({ onClose, item }) {
         name: data?.name || item?.name,
         regularPrice: data?.regularPrice || item?.regularPrice,
         id: data?.id || item?.id,
-        image: data?.editImage[0],
+        image: data?.editImage[0] || "",
       },
-      id: item.id,
+      imagePath: item.image,
     });
 
     // onClose();

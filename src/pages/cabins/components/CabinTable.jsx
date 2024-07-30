@@ -3,7 +3,7 @@ import TableRow from "./TableRow";
 import { useSearchParams } from "react-router-dom";
 
 export default function CabinTable({ cabins }) {
-  console.log(cabins);
+  // console.log(cabins);
   const [searchParams] = useSearchParams();
   //  ---------------------------------- Filtered --------------------------------
   const filterValue = searchParams.get("discount") || "all";

@@ -9,10 +9,23 @@
   animation: rotation 1s linear infinite;
 }
 
+
+.loader2 {
+  width: 30px;
+  height: 30px;
+  border: 12px solid #dbdbdb;
+  border-bottom-color: #ec2a42;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
