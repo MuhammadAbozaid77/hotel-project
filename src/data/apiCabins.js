@@ -90,7 +90,7 @@
 //   return urls;
 // }
 import supabase, { supabaseUrl } from "./supabase";
-
+/* --------------------------------------- Get Cabins ------------------------------------------- */
 export async function getCabins() {
   const { data, error } = await supabase.from("cabins").select("*");
 
@@ -100,10 +100,11 @@ export async function getCabins() {
 
   return data;
 }
+
+/* --------------------------------------- Create New Cabin ------------------------------------------- */
+
 export async function createNewCabin(newCabin) {
-  console.log(newCabin);
   const imageName = `${Math.random()}-${newCabin?.image?.name}`;
-  // .replaceAll( "/",  "");
   const imageURL = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
   const { data, error } = await supabase
@@ -119,17 +120,38 @@ export async function createNewCabin(newCabin) {
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
     .upload(imageName, newCabin.image);
-  //
-  console.log(newCabin);
-
   //-------------------
-  // if (storageError) {
-  //   await supabase.from("cabins").delete().eq("id", data?.id);
-  //   throw new Error("Cabins Image could not be Uploaded");
-  // }
+  if (storageError) {
+    await supabase.from("cabins").delete().eq("id", data?.id);
+    throw new Error("Cabins Image could not be Uploaded");
+  }
   return data;
 }
 
+/* --------------------------------------- Edit Cabin ------------------------------------------- */
+export async function editCabin(cabinEdit) {
+  console.log(cabinEdit);
+  // const { data, error } = await supabase
+  //   .from("cabins")
+  //   .update(cabinEdit)
+  //   // .update({ other_column: 'otherValue' })
+  //   .eq("id", id)
+  //----------------------------------------
+  // const { data, error } = await supabase
+  //   .from("cabins")
+  //   .update(cabinEdit)
+  //   // .update({ other_column: 'otherValue' })
+  //   .eq("some_column", "someValue")
+  //   .select();
+  //----------------------------------------
+  // if (error) {
+  //   throw new Error("Cabins could not be loaded");
+  // }
+
+  // return data;
+}
+
+/* --------------------------------------- Delete Cabin ------------------------------------------- */
 export async function deleteCabin(id) {
   const { data, error } = await supabase.from("cabins").delete().eq("id", id);
 

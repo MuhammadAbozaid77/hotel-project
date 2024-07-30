@@ -13,7 +13,7 @@ export default function Cabins() {
   const [showAddModal, setShowAddModal] = useState(false);
 
   const { isLoading, cabins, error } = useGetCabins();
-  // console.log(cabins);
+
   //  ---------------------------------- Return --------------------------------
   if (isLoading) {
     return <SpinnerLoading />;
@@ -32,7 +32,7 @@ export default function Cabins() {
 
   return (
     <>
-      <div className="flex justify-between items-center bg-white py-[20px] px-5 shadow border-t-[5px] border-gray-500">
+      <div className="flex justify-between items-center bg-white shadow border-t border-gray-200 px-[10px] mx-auto lg:px-[20px] py-[30px]">
         <h1 className="font-semibold text-[20px]"> Cabins </h1>
         <div className="flex justify-center items-center  gap-3">
           <span className="flex items-center gap-2">
@@ -51,7 +51,8 @@ export default function Cabins() {
           </span>
         </div>
       </div>
-      <div className="p-5">
+
+      <div className="">
         <CabinTable cabins={cabins} />
       </div>
 

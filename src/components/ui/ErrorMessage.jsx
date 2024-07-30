@@ -1,24 +1,27 @@
 import { MdOutlineErrorOutline } from "react-icons/md";
+import Container from "./Container";
 
 export default function ErrorMessage({ ErrorMessage }) {
   return (
-    <>
+    <Container>
       <div
-        className="bg-white border-t-4 border-red-500 rounded-b text-teal-900 px-4 py-3 shadow-md h-[200px] flex justify-center  items-center "
+        class="bg-white border-t-4 border-red-500 rounded-b  px-4 py-3 flex justify-start items-center  h-[300px] rounded shadow "
         role="alert"
       >
-        <div className="flex gap-2 items-center flex-col">
-          <div className="py-1 text-red-500">
-            <MdOutlineErrorOutline size={70} />
+        <div class="flex items-center gap-3">
+          <div class="py-1 text-red-600">
+            <MdOutlineErrorOutline size={80} />
           </div>
           <div>
-            <p className="font-bold capitalize">
-              something went wrong , Error Founded
+            <p class="text-[20px] font-semibold text-red-700">
+              Something Went Error
             </p>
-            <p className="text-sm">{ErrorMessage}</p>
+            <p class="font-semibold text-gray-700">
+              Error Message : {ErrorMessage}
+            </p>
           </div>
         </div>
       </div>
-    </>
+    </Container>
   );
 }

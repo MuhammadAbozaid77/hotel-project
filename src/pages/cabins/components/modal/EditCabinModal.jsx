@@ -5,6 +5,7 @@ import { useState } from "react";
 import useUpdateCabin from "../../../../hooks/cabins/useUpdateCabin";
 
 export default function EditCabinModal({ onClose, item }) {
+  console.log(item);
   const {
     register,
     handleSubmit,
@@ -16,17 +17,24 @@ export default function EditCabinModal({ onClose, item }) {
 
   const { isEditing, mutateEditing } = useUpdateCabin();
   const onSubmit = (data) => {
+    console.log(data);
     mutateEditing({
-      UpdatedCabinObject: {
-        ...data,
-        image: data?.image[0]?.name || data?.image,
-        descripition: descripitionText,
+      editedCabin: {
+        // ...data,
+        descripition: descripitionText || item?.descripition,
+        created_at: data?.created_at || item?.created_at,
+        discount: data?.discount || item?.discount,
+        maxCapacity: data?.maxCapacity || item?.maxCapacity,
+        name: data?.name || item?.name,
+        regularPrice: data?.regularPrice || item?.regularPrice,
+        id: data?.id || item?.id,
+        image: data?.editImage[0],
       },
-      id: item?.id,
+      id: item.id,
     });
 
-    onClose();
-    reset();
+    // onClose();
+    // reset();
   };
   const onError = (errors) => {
     // console.log(errors);
@@ -151,11 +159,11 @@ export default function EditCabinModal({ onClose, item }) {
 
           <FormInput label={"Cabin Photo"} error={errors?.image?.message}>
             <input
-              {...register("image")}
-              // type="file"
+              {...register("editImage")}
+              type="file"
+              accept="image/*"
               id="image"
-              //   disabled={isCreating}
-              // defaultValue={item?.image}
+              disabled={isEditing}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>

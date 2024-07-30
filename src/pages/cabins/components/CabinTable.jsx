@@ -1,3 +1,4 @@
+import Container from "../../../components/ui/Container";
 import TableRow from "./TableRow";
 import { useSearchParams } from "react-router-dom";
 
@@ -24,7 +25,7 @@ export default function CabinTable({ cabins }) {
 
   //
   return (
-    <>
+    <Container>
       <div className="relative overflow-x-auto rounded-[5px]">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
           <thead className=" text-gray-600 uppercase bg-white border-b h-[100px] ">
@@ -59,6 +60,6 @@ export default function CabinTable({ cabins }) {
           </tbody>
         </table>
       </div>
-    </>
+    </Container>
   );
 }

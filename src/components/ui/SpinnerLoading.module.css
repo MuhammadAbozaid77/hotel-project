@@ -1,7 +1,7 @@
 .loader {
-  width: 48px;
-  height: 48px;
-  border: 8px solid #dbdbdb;
+  width: 60px;
+  height: 60px;
+  border: 12px solid #dbdbdb;
   border-bottom-color: #ec2a42;
   border-radius: 50%;
   display: inline-block;
