@@ -16,22 +16,28 @@ export default function EditCabinModal({ onClose, item }) {
 
   const { isEditing, mutateEditing } = useUpdateCabin();
   const onSubmit = (data) => {
-    mutateEditing({
-      editedCabin: {
-        descripition: descripitionText || item?.descripition,
-        created_at: data?.created_at || item?.created_at,
-        discount: data?.discount || item?.discount,
-        maxCapacity: data?.maxCapacity || item?.maxCapacity,
-        name: data?.name || item?.name,
-        regularPrice: data?.regularPrice || item?.regularPrice,
-        id: data?.id || item?.id,
-        image: data?.editImage[0] || "",
+    mutateEditing(
+      {
+        editedCabin: {
+          descripition: descripitionText || item?.descripition,
+          created_at: data?.created_at || item?.created_at,
+          discount: data?.discount || item?.discount,
+          maxCapacity: data?.maxCapacity || item?.maxCapacity,
+          name: data?.name || item?.name,
+          regularPrice: data?.regularPrice || item?.regularPrice,
+          id: data?.id || item?.id,
+          image: data?.editImage[0] || "",
+        },
+        imagePath: item.image,
       },
-      imagePath: item.image,
-    });
+      {
+        onSettled: () => {
+          onClose();
+        },
+      }
+    );
 
     // onClose();
-    // reset();
   };
   const onError = (errors) => {
     // console.log(errors);
