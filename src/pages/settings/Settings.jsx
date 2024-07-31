@@ -4,9 +4,9 @@ import SpinnerLoading from "./../../components/ui/SpinnerLoading";
 import NoDataToDisplay from "./../../components/ui/NoDataToDisplay";
 import UpdateSettingModal from "./components/modal/UpdateSettingModal";
 import ErrorMessage from "../../components/ui/ErrorMessage";
+import SettingsTable from "./components/SettingsTable";
 export default function Settings() {
   const { isLoading, settings, error } = useGetSettings();
-  console.log(settings);
   // ------------------State------------------
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   // ------------------Return ------------------
@@ -24,9 +24,9 @@ export default function Settings() {
           Update Settings
         </span>
       </div>
-      {/* <div className="p-5">
-        <CabinTable />
-      </div> */}
+      <div className="p-5">
+        <SettingsTable settings={settings} />
+      </div>
 
       {showUpdateModal && (
         <UpdateSettingModal onClose={() => setShowUpdateModal(false)} />

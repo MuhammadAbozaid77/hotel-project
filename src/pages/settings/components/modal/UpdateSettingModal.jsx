@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 import FormInput from "../../../../components/ui/inputs/FormInput";
 import useUpdateSettings from "../../../../hooks/settings/useUpdateSettings";
+import useGetSettings from "../../../../hooks/settings/useGetSettings";
 
 export default function UpdateSettingModal({ onClose }) {
   const {
@@ -11,11 +12,36 @@ export default function UpdateSettingModal({ onClose }) {
     formState: { errors },
   } = useForm();
 
+  const { settings } = useGetSettings();
+  const {
+    minBookingLength,
+    maxBookingLength,
+    maxGuestsPerBookings,
+    breakfastPrice,
+    created_at,
+    id,
+  } = settings[0];
+
   const { isUpdating, mutateUpdateSettings } = useUpdateSettings();
   const onSubmit = (formObject) => {
-    console.log("Hello", formObject);
-    mutateUpdateSettings();
+    // console.log("Hello", formObject);
+    mutateUpdateSettings(
+      {
+        id: id,
+        newSettingsParams: {
+          ...formObject,
+          created_at: created_at,
+          id: id,
+        },
+      }
+      // {
+      //   onSettled: () => {
+      //     // onClose();
+      //   },
+      // }
+    );
   };
+
   return (
     <>
       <div
@@ -43,10 +69,10 @@ export default function UpdateSettingModal({ onClose }) {
 
           <FormInput
             label={"Minimun Nights Bookings"}
-            error={errors?.regularPrice?.message}
+            error={errors?.minBookingLength?.message}
           >
             <input
-              {...register("regularPrice", {
+              {...register("minBookingLength", {
                 required: "This Field Is Required",
                 min: {
                   value: 1,
@@ -54,19 +80,19 @@ export default function UpdateSettingModal({ onClose }) {
                 },
               })}
               type="number"
-              id="regularPrice"
-              // defaultValue={item?.regularPrice}
-              //   disabled={isCreating}
+              id="minBookingLength"
+              defaultValue={minBookingLength}
+              disabled={isUpdating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>
 
           <FormInput
             label={"Maximum Nights Bookings"}
-            error={errors?.regularPrice?.message}
+            error={errors?.maxBookingLength?.message}
           >
             <input
-              {...register("regularPrice", {
+              {...register("maxBookingLength", {
                 required: "This Field Is Required",
                 min: {
                   value: 1,
@@ -74,19 +100,19 @@ export default function UpdateSettingModal({ onClose }) {
                 },
               })}
               type="number"
-              id="regularPrice"
-              // defaultValue={item?.regularPrice}
-              //   disabled={isCreating}
+              id="maxBookingLength"
+              defaultValue={maxBookingLength}
+              disabled={isUpdating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>
 
           <FormInput
             label={"Maximum Guests Bookings"}
-            error={errors?.regularPrice?.message}
+            error={errors?.maxGuestsPerBookings?.message}
           >
             <input
-              {...register("regularPrice", {
+              {...register("maxGuestsPerBookings", {
                 required: "This Field Is Required",
                 min: {
                   value: 1,
@@ -94,19 +120,19 @@ export default function UpdateSettingModal({ onClose }) {
                 },
               })}
               type="number"
-              id="regularPrice"
-              // defaultValue={item?.regularPrice}
-              //   disabled={isCreating}
+              id="maxGuestsPerBookings"
+              defaultValue={maxGuestsPerBookings}
+              disabled={isUpdating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>
 
           <FormInput
             label={"BreakFast Price"}
-            error={errors?.regularPrice?.message}
+            error={errors?.breakfastPrice?.message}
           >
             <input
-              {...register("regularPrice", {
+              {...register("breakfastPrice", {
                 required: "This Field Is Required",
                 min: {
                   value: 1,
@@ -114,9 +140,9 @@ export default function UpdateSettingModal({ onClose }) {
                 },
               })}
               type="number"
-              id="regularPrice"
-              // defaultValue={item?.regularPrice}
-              //   disabled={isCreating}
+              id="breakfastPrice"
+              defaultValue={breakfastPrice}
+              disabled={isUpdating}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             />
           </FormInput>

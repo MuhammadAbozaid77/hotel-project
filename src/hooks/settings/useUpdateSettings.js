@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export default function useUpdateSettings() {
   const queryClient = useQueryClient();
-  const { mutate: mutateUpdateSettings, isLoading: isUpdating } = useMutation({
+  const { mutate: mutateUpdateSettings, isPending: isUpdating } = useMutation({
     mutationFn: updateSettings,
     onSuccess: () => {
       toast.success("Settings Updated Successfuly");
