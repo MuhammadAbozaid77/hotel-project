@@ -74,6 +74,7 @@ export default function UpdateSettingModal({ onClose }) {
             <input
               {...register("minBookingLength", {
                 required: "This Field Is Required",
+                valueAsNumber: true,
                 min: {
                   value: 1,
                   message: "Value Should Be At Least 1",
@@ -94,6 +95,7 @@ export default function UpdateSettingModal({ onClose }) {
             <input
               {...register("maxBookingLength", {
                 required: "This Field Is Required",
+                valueAsNumber: true,
                 min: {
                   value: 1,
                   message: "Value Should Be At Least 1",
@@ -114,6 +116,7 @@ export default function UpdateSettingModal({ onClose }) {
             <input
               {...register("maxGuestsPerBookings", {
                 required: "This Field Is Required",
+                valueAsNumber: true,
                 min: {
                   value: 1,
                   message: "Value Should Be At Least 1",
@@ -134,6 +137,7 @@ export default function UpdateSettingModal({ onClose }) {
             <input
               {...register("breakfastPrice", {
                 required: "This Field Is Required",
+                valueAsNumber: true,
                 min: {
                   value: 1,
                   message: "Value Should Be At Least 1",
