@@ -34,20 +34,16 @@ export async function getSettings() {
 }
 /* --------------------------------- Update  Settings------------------------------ */
 export async function updateSettings({ newSettingsParams, id }) {
-  // const { data, error } = await supabase
-  //   .from("settings")
-  //   .update({ ...newSettingsParams })
-  //   .eq("id", id);
   console.log(newSettingsParams);
-  // const { data, error } = await supabase
-  //   .from("settings")
-  //   .update(newSettingsParams)
-  //   .eq("id", id);
-  // // .select();
+  const { data, error } = await supabase
+    .from("settings")
+    .update({ ...newSettingsParams })
+    .eq("id", id);
+  // .select();
 
-  // if (error) {
-  //   throw new Error("Settings could not be Updated");
-  // }
+  if (error) {
+    throw new Error("Settings could not be Updated");
+  }
 
-  // return data;
+  return data;
 }
